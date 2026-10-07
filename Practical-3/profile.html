@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" class="auth-pending">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Fenil Finava</title>
+    <link rel="stylesheet" href="assets/css/global.css?v=4">
+    <style>.auth-pending body { visibility: hidden; }</style>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+
+<div class="grid-container">
+
+    <header>
+        <h1>Student Profile</h1>
+        <p>Personal and Academic Profile Record</p>
+        
+        
+        
+    </header>
+
+        <nav></nav>
+
+    <main>
+        <section>
+            <h2>Personal Information</h2>
+            
+            <dl>
+                <dt><strong>Student Name:</strong></dt>
+                <dd>Fenil Finava</dd>
+                
+                <dt><strong>Enrollment Number:</strong></dt>
+                <dd>25CS011</dd>
+                
+                <dt><strong>Institute & Department:</strong></dt>
+                <dd>Chandubhai S. Patel Institute of Technology (CSPIT) - Computer Science & Engineering (CSE)</dd>
+                
+                <dt><strong>Campus Building:</strong></dt>
+                <dd>A7 Building, CHARUSAT University Campus, Changa</dd>
+                
+                <dt><strong>Current Semester:</strong></dt>
+                <dd>Semester 3 (Division I)</dd>
+
+                <dt><strong>Student Official Email:</strong></dt>
+                <dd><a href="mailto:25cs011@charusat.edu.in">25cs011@charusat.edu.in</a></dd>
+            </dl>
+        </section>
+
+        
+
+        <section>
+            <h2>Update Contact & Address Details</h2>
+            
+            <form action="profile.html" method="POST">
+                <fieldset>
+                    <legend><strong>Edit Student Records</strong></legend>
+                    <p>
+                        <label for="phone"><strong>Phone Number:</strong></label><br>
+                        <input type="tel" id="phone" name="phone" value="+91-2697-265011" size="30">
+                    </p>
+                    <p>
+                        <label for="address"><strong>Hostel / Residential Address:</strong></label><br>
+                        <textarea id="address" name="address" rows="3" cols="50">A7 Building, CSPIT, CHARUSAT University Campus, Changa, Gujarat</textarea>
+                    </p>
+                    <p>
+                        <button type="submit"><strong>Save Details &rarr;</strong></button>
+                    </p>
+                </fieldset>
+            </form>
+        </section>
+
+        
+
+        <section>
+            <h2>Account Security</h2>
+            <details>
+                <summary><strong>Change Login Password</strong></summary>
+                <br>
+                <form action="profile.html" method="POST">
+                    <p>
+                        <label for="oldpass">Current Password:</label><br>
+                        <input type="password" id="oldpass" name="oldpass" required>
+                    </p>
+                    <p>
+                        <label for="newpass">New Password:</label><br>
+                        <input type="password" id="newpass" name="newpass" required minlength="6">
+                    </p>
+                    <button type="submit">Update Password</button>
+                </form>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        
+        <p>&copy; <time datetime="2026">2026</time> StudentHub - CSPIT, CHARUSAT. All rights reserved.</p>
+        <address>
+            Email: <a href="mailto:support@charusat.edu.in">support@charusat.edu.in</a> | Phone: <a href="tel:+91-2697-265011">+91-2697-265011</a>
+        </address>
+    </footer>
+
+</div>
+
+    <script src="assets/js/nav.js"></script>
+</body>
+</html>

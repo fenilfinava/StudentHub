@@ -1,0 +1,17 @@
+[
+  {"id":1, "title":"Odoo Hackathon", "date":"2026-08-22", "location":"LDCE", "category":"Hackathon"},
+  {"id":2, "title":"Independence Day", "date":"2026-08-15", "location":"Campus Grounds", "category":"Cultural"},
+  {"id":3, "title":"TechFest Spoural", "date":"2026-09-10", "location":"CSPIT A7", "category":"TechFest"},
+  {"id":4, "title":"AI Seminar", "date":"2026-09-15", "location":"Auditorium", "category":"Seminar"},
+  {"id":5, "title":"Garba Night", "date":"2026-10-05", "location":"University Ground", "category":"Cultural"},
+  {"id":6, "title":"Web Dev Bootcamp", "date":"2026-08-30", "location":"Lab 631", "category":"Workshop"},
+  {"id":7, "title":"Codevita Prelims", "date":"2026-09-20", "location":"Online", "category":"Hackathon"},
+  {"id":8, "title":"Blood Donation", "date":"2026-10-12", "location":"Nursing block", "category":"Social"},
+  {"id":9, "title":"Cloud Computing AWS", "date":"2026-09-02", "location":"Lab 632", "category":"Seminar"},
+  {"id":10, "title":"Robotics Expo", "date":"2026-09-25", "location":"Main Foyer", "category":"TechFest"},
+  {"id":11, "title":"Sports Week", "date":"2026-11-01", "location":"Sports Complex", "category":"Sports"},
+  {"id":12, "title":"Alumni Meet", "date":"2026-12-15", "location":"Auditorium", "category":"Social"},
+  {"id":13, "title":"Python Workshop", "date":"2026-08-28", "location":"Lab 633", "category":"Workshop"},
+  {"id":14, "title":"Cyber Security Talk", "date":"2026-09-18", "location":"Room 506", "category":"Seminar"},
+  {"id":15, "title":"Hacktoberfest Open Source", "date":"2026-10-01", "location":"Online", "category":"Hackathon"}
+]

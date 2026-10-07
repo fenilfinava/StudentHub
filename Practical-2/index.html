@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="auth-pending">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentHub - CSPIT Charusat Portal</title>
+    <style>
+        /* Premium Flexbox Layout (Practical Submission) */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        :root { --primary: #3b82f6; --primary-dark: #2563eb; --secondary: #10b981; --bg: #f8fafc; --text: #334155; --text-light: #64748b; --card: #ffffff; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg); color: var(--text); }
+        header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; padding: 50px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3); position: relative; }
+        header::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top, rgba(59,130,246,0.2) 0%, transparent 70%); z-index: 0; pointer-events: none;}
+        header h1 { margin: 0 0 15px 0; font-size: 3rem; font-weight: 700; letter-spacing: -1px; z-index: 1;}
+        header p { margin: 0 0 30px 0; font-size: 1.2rem; color: #94a3b8; z-index: 1;}
+        nav { z-index: 100; position: relative; background: rgba(255,255,255,0.05); padding: 15px 30px; border-radius: 50px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 900px;}
+        nav ul { list-style: none; padding: 0; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 0; width: 100%;}
+        nav ul li a { color: #f8fafc; text-decoration: none; padding: 12px 24px; border-radius: 30px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; display: block;}
+        nav ul li a:hover, nav ul li a strong { background-color: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 10px 20px -10px var(--primary); }
+        .main-container { display: flex; flex: 1; flex-wrap: wrap; padding: 60px 20px; gap: 40px; max-width: 1300px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+        main { flex: 3; min-width: 300px; animation: slideUp 0.6s ease-out; }
+        section { background: var(--card); padding: 40px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 40px; border: 1px solid #f1f5f9; }
+        section h2 { margin-top: 0; color: #0f172a; font-size: 1.8rem; letter-spacing: -0.5px; margin-bottom: 25px;}
+        aside { flex: 1; min-width: 320px; animation: slideUp 0.8s ease-out; }
+        aside section, aside .card-alert { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; border-top: 4px solid var(--secondary);}
+        aside h2 { font-size: 1.4rem; color: #0f172a; margin-top: 0; margin-bottom: 20px;}
+        aside ul { padding-left: 20px; color: var(--text-light); line-height: 1.7;}
+        aside li { margin-bottom: 15px; }
+        aside mark { background: #dbeafe; color: var(--primary-dark); padding: 2px 8px; border-radius: 4px; font-weight: 600;}
+        .articles-flex { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px; }
+        .articles-flex article { flex: 1; min-width: 280px; background: #ffffff; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
+        .articles-flex article:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); border-color: #cbd5e1; }
+        .articles-flex article h3 { margin-top: 0; color: #0f172a; font-size: 1.25rem;}
+        .articles-flex article p { color: var(--text-light); line-height: 1.6;}
+        details { background: #f8fafc; padding: 15px 20px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+        summary { font-weight: 600; cursor: pointer; color: #0f172a; outline: none; }
+        details p { margin: 15px 0 0 0; color: var(--text-light); line-height: 1.6; }
+        footer { background-color: #0f172a; color: #94a3b8; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: auto; border-top: 1px solid #1e293b; }
+        footer address { font-style: normal; margin-top: 10px; line-height: 1.8;}
+        /* Dark Theme Styles */
+        [data-theme="dark"] { --bg: #0f172a; --text: #f8fafc; --card: #1e293b; --text-light: #94a3b8; }
+        [data-theme="dark"] header { background: linear-gradient(135deg, #0f172a 0%, #020617 100%); }
+        [data-theme="dark"] section, [data-theme="dark"] aside section, [data-theme="dark"] aside .card-alert { background: #1e293b; border-color: #334155; }
+        [data-theme="dark"] h2, [data-theme="dark"] h3 { color: #f8fafc; }
+        [data-theme="dark"] .articles-flex article { background: #0f172a; border-color: #334155; }
+        [data-theme="dark"] .articles-flex article:hover { border-color: #475569; }
+        [data-theme="dark"] details { background: #0f172a; border-color: #334155; }
+        [data-theme="dark"] summary { color: #f8fafc; }
+
+        /* Notification Banner */
+        .notification-banner { background-color: var(--secondary); color: white; text-align: center; padding: 12px; font-weight: 500; display: flex; justify-content: center; align-items: center; position: relative; z-index: 1000;}
+        .close-banner { position: absolute; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; font-weight: bold; }
+
+        /* Hamburger Menu */
+        .hamburger-container { display: none; width: 100%; justify-content: flex-end; }
+        .hamburger-menu { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.2rem; cursor: pointer; transition: 0.3s;}
+        .hamburger-menu:hover { background: rgba(255,255,255,0.2); }
+        .theme-toggle { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: inherit; font-weight: 600; margin-left: 15px; transition: 0.3s; }
+        .theme-toggle:hover { background: rgba(255,255,255,0.4); }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-overlay.show-modal { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-content { background: var(--card); padding: 40px; border-radius: 16px; max-width: 500px; width: 90%; position: relative; color: var(--text); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); text-align: center; }
+        .close-modal { position: absolute; top: 15px; right: 20px; background: #f1f5f9; border: none; font-size: 1.5rem; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #334155; transition: 0.2s;}
+        .close-modal:hover { background: #e2e8f0; color: #0f172a;}
+        
+        /* Interactive Button */
+        .btn-action { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: 0.3s; display: inline-block; margin-top: 15px;}
+        .btn-action:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(37,99,235,0.3); }
+
+        /* Slider */
+        .slider-container { position: relative; width: 100%; height: 400px; overflow: hidden; border-radius: 20px; margin: 30px 0; background: #0f172a; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);}
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.5s; }
+        .slide:hover img { opacity: 1; transform: scale(1.05); }
+        .slide-text { position: absolute; bottom: 30px; left: 30px; color: white; text-align: left; background: rgba(0,0,0,0.6); padding: 20px 25px; border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .slide-text h3 { margin: 0 0 5px 0; font-size: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+        .slide-text p { margin: 0; font-size: 1rem; color: #f1f5f9; }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 10; color: #0f172a; display: flex; align-items: center; justify-content: center; transition: 0.2s;}
+        .slider-btn:hover { background: white; transform: translateY(-50%) scale(1.1); }
+        .slider-prev { left: 20px; }
+        .slider-next { right: 20px; }
+
+        /* FAQ Custom JS Layout */
+        .faq-item { margin-bottom: 15px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .faq-question { background: var(--card); padding: 18px 20px; width: 100%; text-align: left; border: none; font-size: 1.1rem; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; font-family: inherit;}
+        .faq-question:hover { background: #f8fafc; }
+        [data-theme="dark"] .faq-question:hover { background: #334155; }
+        .faq-question::after { content: '+'; font-size: 1.5rem; font-weight: 300; transition: transform 0.3s; }
+        .faq-question.active::after { transform: rotate(45deg); }
+        .faq-answer { background: var(--bg); padding: 20px; display: none; color: var(--text-light); line-height: 1.6; border-top: 1px solid var(--border);}
+        
+        @media (max-width: 768px) {
+            .hamburger-container { display: flex; }
+            #nav-links { display: none; flex-direction: column; width: 100%; position: absolute; top: 100%; left: 0; background: var(--card); padding: 20px; border-radius: 0 0 15px 15px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+            #nav-links.active { display: flex; }
+            #nav-links li a { color: var(--text); }
+            [data-theme="dark"] #nav-links { background: #1e293b; }
+            [data-theme="dark"] #nav-links li a { color: #f8fafc; }
+            .theme-toggle { margin-left: 0; margin-top: 15px; background: var(--primary); color: white;}
+        }
+
+        hr { display: none; }
+        a { color: var(--primary); text-decoration: none; font-weight: 600;}
+        a:hover { color: var(--primary-dark); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+    <style>.auth-pending body { visibility: hidden; }</style>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+
+    <!-- Notification Banner -->
+    <div class="notification-banner" id="notification-banner">
+        <span>🎉 Welcome to the new dynamic StudentHub portal! Check out the new dark mode.</span>
+        <button class="close-banner" id="close-banner">&times;</button>
+    </div>
+
+    <header>
+        <h1>StudentHub - CSPIT</h1>
+        <p>Chandubhai S. Patel Institute of Technology - CHARUSAT Campus</p>
+                <nav>
+            <div class="hamburger-container">
+                <button class="hamburger-menu" id="hamburger-menu" style="padding: 8px 18px; border-radius: 8px; font-weight: 600;">☰ Menu</button>
+            </div>
+            <ul id="nav-links">
+                <li><a href="index.html"><strong>Home</strong></a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="test_connection.php">Database Demo</a></li>
+                <li><button class="theme-toggle" >🌙 Theme</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+    <main>
+        <section>
+            <h2>Welcome to Student Portal</h2>
+            <p>Your personalized portal for Computer Science & Engineering (CSE) at CSPIT, A7 Building, CHARUSAT. Access your timetable, 3rd semester subjects, attendance records, and exam results.</p>
+            <button class="btn-action" id="open-modal-btn">View Portal Guidelines</button>
+        </section>
+
+        <!-- Dynamic JS Image/Content Slider -->
+        <div class="slider-container">
+            <button class="slider-btn slider-prev" id="slider-prev">&lt;</button>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="University Campus">
+                <div class="slide-text">
+                    <h3>🎓 Welcome to Semester 3 CSE!</h3>
+                    <p>Experience the best learning environment at CSPIT.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Hackathon Team">
+                <div class="slide-text">
+                    <h3>🚀 Upcoming Odoo Hackathon</h3>
+                    <p>Join the coding battle at LDCE this weekend!</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Coding">
+                <div class="slide-text">
+                    <h3>📅 New Assignments Uploaded</h3>
+                    <p>Check your dashboard for the latest coding tasks.</p>
+                </div>
+            </div>
+            <button class="slider-btn slider-next" id="slider-next">&gt;</button>
+        </div>
+
+        <section>
+            <h2>Portal Navigation</h2>
+            
+            <div class="articles-flex">
+                <article>
+                    <h3>Semester 3 Subjects & Timetable</h3>
+                    <p>Check your enrolled CSE subjects including FDSA, WDF, OOP, FCN, and Discrete Maths.</p>
+                    <p><a href="courses.html">View Courses &rarr;</a></p>
+                </article>
+
+                <article>
+                    <h3>Attendance & CGPA</h3>
+                <p>Monitor your current 94% average attendance and check past semester marksheets (CGPA 8.05).</p>
+                <p><a href="attendance.html">Check Attendance</a> | <a href="results.html">View Results &rarr;</a></p>
+            </article>
+
+            <article>
+                <h3>Assignments & Competitions</h3>
+                <p>Semester 3 assignments coming soon. Stay updated with campus hackathons and activities.</p>
+                <p><a href="assignments.html">View Assignments</a> | <a href="achievements.html">Achievements &rarr;</a></p>
+            </article>
+            </div>
+        </section>
+
+        <section>
+            <h2>Quick FAQ (Dynamic JS)</h2>
+            <div class="faq-item">
+                <button class="faq-question">Where is the CSE Department located?</button>
+                <div class="faq-answer">The Department of Computer Science & Engineering is located in A7 Building, CSPIT, CHARUSAT Campus.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How do I check my 3rd semester schedule?</button>
+                <div class="faq-answer">Log into your <a href="dashboard.html">Dashboard</a> to check lecture rooms (Room 506) and practical batch schedules.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Who do I contact for portal queries?</button>
+                <div class="faq-answer">You can reach out via our <a href="contact.html">Contact Us page</a> or email support@charusat.edu.in.</div>
+            </div>
+        </section>
+    </main>
+
+    <aside>
+        <div class="card-alert" style="position: sticky; top: 40px;">
+            <h2>Latest Campus Alert</h2>
+            <ul>
+                <li><time datetime="2026-08-22">August 22, 2026</time>: <mark>Odoo Hackathon at LDCE!</mark> Get your team ready and register before the deadline.</li>
+                <li><time datetime="2026-08-15">August 15, 2026</time>: Independence Day Celebration at CHARUSAT Campus.</li>
+            </ul>
+            <p><a href="notifications.html">See all announcements &rarr;</a></p>
+        </div>
+    </aside>
+    </div>
+
+    <footer>
+        <p>&copy; <time datetime="2026">2026</time> StudentHub - CSPIT, CHARUSAT. All rights reserved.</p>
+        <address>
+            A7 Building, CSPIT, CHARUSAT University Campus, Changa, Gujarat.<br>
+            Email: <a href="mailto:support@charusat.edu.in">support@charusat.edu.in</a> | Phone: <a href="tel:+91-2697-265011">+91-2697-265011</a>
+        </address>
+    </footer>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="custom-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal-btn">&times;</button>
+            <h2>Portal Guidelines</h2>
+            <p>Welcome to StudentHub! Please note that all assignments must be submitted on time. Attendance below 80% will result in a penalty. For any technical issues, contact the admin.</p>
+            <button class="btn-action" style="margin-top: 20px;" onclick="document.getElementById('custom-modal').classList.remove('show-modal')">I Understand</button>
+        </div>
+    </div>
+
+    <!-- Link the Dynamic UI JS -->
+    <script src="assets/js/script.js"></script>
+    </body>
+</html>

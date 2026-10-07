@@ -1,0 +1,17 @@
+[
+  {"id":1, "q":"Where is the CSE Department?", "a":"A7 Building, CSPIT, CHARUSAT."},
+  {"id":2, "q":"How to check attendance?", "a":"Login to dashboard and click Attendance."},
+  {"id":3, "q":"What is passing criteria?", "a":"Minimum 40% in mid and final exams."},
+  {"id":4, "q":"How to register for elective?", "a":"Use the e-governance portal during the first week."},
+  {"id":5, "q":"Where is the library?", "a":"Central Library is near the main admin block."},
+  {"id":6, "q":"Who is HOD of CSE?", "a":"Dr. Amit Thakkar is the HOD."},
+  {"id":7, "q":"How to pay fees?", "a":"Fees can be paid online via student portal."},
+  {"id":8, "q":"Is there a hostel facility?", "a":"Yes, AC and Non-AC hostels are available."},
+  {"id":9, "q":"What is the campus wifi password?", "a":"Register your MAC address with IT dept."},
+  {"id":10, "q":"How to get railway concession?", "a":"Apply at the student section with ID proof."},
+  {"id":11, "q":"Can I change my branch?", "a":"Yes, based on CPI at the end of Sem 2."},
+  {"id":12, "q":"Where to submit assignments?", "a":"Either hardcopy to faculty or upload on LMS."},
+  {"id":13, "q":"What is the timing of college?", "a":"09:10 AM to 04:20 PM."},
+  {"id":14, "q":"Is attendance mandatory?", "a":"Yes, 80% attendance is required."},
+  {"id":15, "q":"How to apply for leave?", "a":"Submit a leave application to your counselor."}
+]
