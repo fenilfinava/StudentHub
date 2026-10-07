@@ -1,39 +1,47 @@
-Practical 6: Fetch API, JSON, Search & Filter
-Student Name: Fenil Finava
-Student ID: 25CS011
-Course Code: ITUE203 - WEB DEVELOPMENT FRAMEWORKS
-Academic Year: 2026-27
+<div align="center">
+  <h1>🎓 Practical 6</h1>
+  <h3>Fetch API, JSON, Search & Filter</h3>
+</div>
 
-Objective
-Fetch external JSON data using the Fetch API and dynamically display it with search, filtering, sorting, and pagination.
+---
 
-Technologies
-- HTML5
-- CSS3
-- JavaScript ES6+
-- JSON
-- Fetch API
+### 👨‍🎓 Student Information
+- **Name:** Fenil Finava
+- **ID:** 25CS011
+- **Course:** ITUE203 - WEB DEVELOPMENT FRAMEWORKS
+- **Year:** 2026-27
 
-Project Structure
-├── assets/
-│   ├── css/ (global.css)
-│   └── js/ (auth.js, nav.js, theme.js, script.js, data.js)
-├── data/ (JSON databases)
-├── api/ (PHP endpoints)
-├── private/ (CSV storage)
-├── *.html (Pages)
-└── *.php (Scripts)
+---
 
-Main Features
-- JSON Fetching: data.js fetches students.json, events.json, and faqs.json.
-- Dynamic Rendering: Builds HTML tables dynamically from JSON keys.
-- Search & Filter: Filter by branch/category and search across all fields.
-- Sorting: Sort by name/title ascending or descending.
-- Pagination: Splits data into chunks of 5 with Next/Prev buttons.
-- Loading/Error: Displays a loading spinner and handles fetch errors cleanly.
+### 🎯 Objective
+> Fetch external JSON data using the Fetch API and dynamically display it with search, filtering, sorting, and pagination.
 
-Testing
-- Run PHP server (php -S localhost:8000 router.php).
-- Login and navigate to Directory (directory.html).
-- Test switching tabs to load different JSON files.
-- Test Search, Filter, Sort, and Pagination buttons.
+---
+
+### 🚀 Main Features
+- ✅ **Fetch API: Loading multiple JSON files (students.json, events.json, faqs.json).**
+- ✅ **Dynamic Rendering: Building HTML tables natively from JSON objects.**
+- ✅ **Search & Filter logic: Filtering array objects based on dropdowns and text inputs.**
+- ✅ **Sorting & Pagination: Array sorting and array slicing for paginated views.**
+
+---
+
+### 📂 Project Structure
+```text
+Practical-6/
+├── assets
+│   ├── css
+│   │   └── global.css
+│   └── js
+│       └── data.js
+├── data
+│   ├── events.json
+│   ├── faqs.json
+│   └── students.json
+└── directory.html
+```
+
+---
+
+### 💻 How to Run
+1. Open any `.html` file directly in your web browser.

@@ -1,30 +1,48 @@
-Practical 2: Static HTML5 Skeletons
-Student Name: Fenil Finava
-Student ID: 25CS011
-Course Code: ITUE203 - WEB DEVELOPMENT FRAMEWORKS
-Academic Year: 2026-27
+<div align="center">
+  <h1>🎓 Practical 2</h1>
+  <h3>Static HTML5 Skeletons</h3>
+</div>
 
-Objective
-Develop static HTML5 skeletons for at least 10 StudentHub pages using semantic tags and accessibility-friendly structure.
+---
 
-Technologies
-- HTML5
+### 👨‍🎓 Student Information
+- **Name:** Fenil Finava
+- **ID:** 25CS011
+- **Course:** ITUE203 - WEB DEVELOPMENT FRAMEWORKS
+- **Year:** 2026-27
 
-Project Structure
-├── assets/
-│   ├── css/ (global.css)
-│   └── js/ (auth.js, nav.js, theme.js, script.js, data.js)
-├── data/ (JSON databases)
-├── api/ (PHP endpoints)
-├── private/ (CSV storage)
-├── *.html (Pages)
-└── *.php (Scripts)
+---
 
-Main Features
-- 10+ Pages: index.html, login.html, register.html, dashboard.html, profile.html, courses.html, assignments.html, attendance.html, results.html, achievements.html, notifications.html, directory.html, contact.html.
-- Semantic Tags: Used <header>, <nav>, <main>, <section>, <article>, <aside>, and <footer> across the application.
-- Accessibility: Clean HTML structure and semantic meaning.
+### 🎯 Objective
+> Develop static HTML5 skeletons for at least 10 StudentHub pages using semantic tags and accessibility-friendly structure.
 
-Testing
-- Open any HTML file in a browser.
-- Verify page structure and tags using Developer Tools.
+---
+
+### 🚀 Main Features
+- ✅ **10+ HTML5 Pages: Home, Login, Register, Dashboard, Profile, Courses, etc.**
+- ✅ **Semantic Tags: Extensively used <header>, <nav>, <main>, <section>, <article>, and <footer>.**
+- ✅ **Accessibility-Friendly: Clean DOM structure.**
+
+---
+
+### 📂 Project Structure
+```text
+Practical-2/
+├── assignments.html
+├── attendance.html
+├── contact.html
+├── courses.html
+├── dashboard.html
+├── directory.html
+├── index.html
+├── login.html
+├── notifications.html
+├── profile.html
+├── register.html
+└── results.html
+```
+
+---
+
+### 💻 How to Run
+1. Open any `.html` file directly in your web browser.

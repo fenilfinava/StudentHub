@@ -43,15 +43,5 @@ Initiate the semester-long StudentHub portal by identifying the problem scope, u
 
 ---
 
-### 📂 Planned Folder Structure
-```text
-StudentHub/
-├── assets/
-│   ├── css/ (Stylesheets)
-│   ├── js/ (JavaScript modules)
-│   └── img/ (Images)
-├── api/ (PHP Endpoints)
-├── data/ (JSON databases)
-├── private/ (Secure files like CSV)
-└── [HTML Pages]
-```
+### 📂 Project Structure
+*(Planning Phase - No files yet)*

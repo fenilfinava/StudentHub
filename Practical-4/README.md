@@ -1,39 +1,44 @@
-Practical 4: Dynamic UI with JavaScript DOM & Events
-Student Name: Fenil Finava
-Student ID: 25CS011
-Course Code: ITUE203 - WEB DEVELOPMENT FRAMEWORKS
-Academic Year: 2026-27
+<div align="center">
+  <h1>🎓 Practical 4</h1>
+  <h3>Dynamic UI with JavaScript DOM & Events</h3>
+</div>
 
-Objective
-Create dynamic UI components (FAQ, modal, slider, notification banner, hamburger menu, light/dark theme) using JavaScript DOM manipulation and Event Handling.
+---
 
-Technologies
-- HTML5
-- CSS3
-- JavaScript ES6+
-- localStorage
+### 👨‍🎓 Student Information
+- **Name:** Fenil Finava
+- **ID:** 25CS011
+- **Course:** ITUE203 - WEB DEVELOPMENT FRAMEWORKS
+- **Year:** 2026-27
 
-Project Structure
-├── assets/
-│   ├── css/ (global.css)
-│   └── js/ (auth.js, nav.js, theme.js, script.js, data.js)
-├── data/ (JSON databases)
-├── api/ (PHP endpoints)
-├── private/ (CSV storage)
-├── *.html (Pages)
-└── *.php (Scripts)
+---
 
-Main Features
-- Light/Dark Theme: Implemented via theme.js using CSS variables and localStorage.
-- Hamburger Menu: Mobile responsive navigation toggle in script.js.
-- Slider: Image/content slider on index.html with auto-play.
-- Modal: Custom popup modal on index.html.
-- FAQ Accordion: Dynamic open/close functionality using JS.
-- Notification Banner: Dismissible alerts.
+### 🎯 Objective
+> Create dynamic UI components (FAQ, modal, slider, notification banner, hamburger menu, light/dark theme) using JavaScript DOM manipulation and Event Handling.
 
-Testing
-- Open index.html.
-- Test Theme toggle button.
-- Test slider arrows.
-- Test FAQ open/close.
-- Test Mobile Hamburger menu on small screen.
+---
+
+### 🚀 Main Features
+- ✅ **Light/Dark Theme: Implemented using localStorage and CSS variables.**
+- ✅ **Hamburger Menu: Mobile responsive navigation sidebar toggle.**
+- ✅ **Interactive Slider: Image/content carousel on the landing page.**
+- ✅ **Dynamic FAQ & Modal: Accordion-style FAQs and popup modals built with vanilla JS.**
+
+---
+
+### 📂 Project Structure
+```text
+Practical-4/
+├── assets
+│   ├── css
+│   │   └── global.css
+│   └── js
+│       ├── script.js
+│       └── theme.js
+└── index.html
+```
+
+---
+
+### 💻 How to Run
+1. Open any `.html` file directly in your web browser.

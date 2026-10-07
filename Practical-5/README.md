@@ -1,36 +1,41 @@
-Practical 5: Registration Form with JavaScript Validation & Regex
-Student Name: Fenil Finava
-Student ID: 25CS011
-Course Code: ITUE203 - WEB DEVELOPMENT FRAMEWORKS
-Academic Year: 2026-27
+<div align="center">
+  <h1>🎓 Practical 5</h1>
+  <h3>Registration Form Validation & Regex</h3>
+</div>
 
-Objective
-Create a student registration form with HTML5 input types, comprehensive JavaScript validation using Regular Expressions, and password strength checking.
+---
 
-Technologies
-- HTML5
-- CSS3
-- JavaScript ES6+
+### 👨‍🎓 Student Information
+- **Name:** Fenil Finava
+- **ID:** 25CS011
+- **Course:** ITUE203 - WEB DEVELOPMENT FRAMEWORKS
+- **Year:** 2026-27
 
-Project Structure
-├── assets/
-│   ├── css/ (global.css)
-│   └── js/ (auth.js, nav.js, theme.js, script.js, data.js)
-├── data/ (JSON databases)
-├── api/ (PHP endpoints)
-├── private/ (CSV storage)
-├── *.html (Pages)
-└── *.php (Scripts)
+---
 
-Main Features
-- Form Fields: Name, Email, Mobile, Password, Confirm Password, Course, Year, Gender, Terms.
-- Real-time Validation: Instant feedback using Regex for Email and Phone.
-- Password Strength: Visual meter showing password strength based on regex rules (length, cases, numbers, symbols).
-- Match Validation: Checks if Confirm Password matches Password.
-- Accessible: Proper labels and error messages placed near fields.
+### 🎯 Objective
+> Create a student registration form with HTML5 input types, comprehensive JavaScript validation using Regular Expressions, and password strength checking.
 
-Testing
-- Open register.html.
-- Try submitting without data to see HTML5 validation.
-- Type in the password field to see the dynamic strength meter.
-- Test invalid email and phone formats.
+---
+
+### 🚀 Main Features
+- ✅ **HTML5 Input Types: Proper use of email, tel, date, and password types.**
+- ✅ **Regex Validation: Strict validation for email domains and phone numbers.**
+- ✅ **Password Strength Meter: Visual feedback based on length and character complexity.**
+- ✅ **Match Validation: Real-time checking if passwords match.**
+
+---
+
+### 📂 Project Structure
+```text
+Practical-5/
+├── assets
+│   └── css
+│       └── global.css
+└── register.html
+```
+
+---
+
+### 💻 How to Run
+1. Open any `.html` file directly in your web browser.
