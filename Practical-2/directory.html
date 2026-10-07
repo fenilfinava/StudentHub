@@ -1,32 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" class="auth-pending">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Data Directory - StudentHub</title>
-    <link rel="stylesheet" href="assets/css/global.css?v=4">
-    <style>
-        .data-controls { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
-        .data-controls input, .data-controls select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; flex: 1; min-width: 200px;}
-        .loading { text-align: center; font-size: 1.2rem; font-weight: 600; color: var(--primary); padding: 40px; }
-        .error-message { text-align: center; font-size: 1.2rem; font-weight: 600; color: red; padding: 40px; background: #fee2e2; border-radius: 12px;}
-        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
-        .pagination button { padding: 8px 15px; border: none; background: var(--card); color: var(--text-dark); border-radius: 8px; cursor: pointer; font-weight: 600; border: 1px solid var(--border); box-shadow: none;}
-        .pagination button:hover { background: var(--primary); color: white; }
-        .pagination button:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
-        .pagination .active { background: var(--primary); color: white; }
-        #data-table-container { overflow-x: auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tabs button { background: #e2e8f0; color: var(--text-dark); padding: 10px 20px; box-shadow: none; border-radius: 8px 8px 0 0; }
-        .tabs button.active { background: var(--primary); color: white; }
-    </style>
-    <style>.auth-pending body { visibility: hidden; }</style>
-    <script src="assets/js/theme.js"></script>
-    <script src="assets/js/auth.js"></script>
+    
+    
+    
+    
+    
 </head>
 <body>
 
-<div class="grid-container">
+<div >
     <header>
         <h1>Campus Data Directory</h1>
         <p>Dynamic JSON Rendering using Fetch API (Filter, Sort, Pagination)</p>
@@ -36,13 +22,13 @@
 
     <main>
         <section>
-            <div class="tabs">
-                <button class="tab-btn active" data-type="students">Students Data</button>
-                <button class="tab-btn" data-type="events">Events Data</button>
-                <button class="tab-btn" data-type="faqs">FAQs Data</button>
+            <div >
+                <button  data-type="students">Students Data</button>
+                <button  data-type="events">Events Data</button>
+                <button  data-type="faqs">FAQs Data</button>
             </div>
 
-            <div class="data-controls">
+            <div >
                 <input type="text" id="searchInput" placeholder="🔍 Search records...">
                 
                 <select id="filterSelect">
@@ -63,7 +49,7 @@
                 <!-- Table rendered dynamically -->
             </div>
 
-            <div class="pagination" id="pagination-container">
+            <div  id="pagination-container">
                 <!-- Pagination rendered dynamically -->
             </div>
         </section>
@@ -74,7 +60,7 @@
     </footer>
 </div>
 
-<script src="assets/js/data.js"></script>
-    <script src="assets/js/nav.js"></script>
+
+    
 </body>
 </html>

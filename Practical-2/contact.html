@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" class="auth-pending">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Support - CSPIT Charusat</title>
-    <link rel="stylesheet" href="assets/css/global.css?v=4">
-    <style>.auth-pending body { visibility: hidden; }</style>
-    <script src="assets/js/theme.js"></script>
-    <script src="assets/js/auth.js"></script>
+    
+    
+    
+    
 </head>
 <body>
 
-<div class="grid-container">
+<div >
 
     <header>
         <h1>Contact Support & Helpdesk</h1>
@@ -83,15 +83,7 @@
 </div>
 
 
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const msgDiv = document.getElementById('form-message');
-    if (urlParams.get('success') === '1') {
-        msgDiv.innerHTML = '<div style="background:#d1fae5; color:#065f46; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #34d399;">✅ Your inquiry has been submitted successfully and saved to CSV!</div>';
-    } else if (urlParams.get('error')) {
-        msgDiv.innerHTML = '<div style="background:#fee2e2; color:#b91c1c; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #f87171;">⚠️ Error: ' + decodeURIComponent(urlParams.get('error')) + '</div>';
-    }
-</script>
-    <script src="assets/js/nav.js"></script>
+
+    
 </body>
 </html>
