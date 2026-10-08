@@ -8,7 +8,7 @@ This project is built entirely using **Pure HTML5 Semantic Tags** (`<header>`, `
 
 ## 👨‍💻 Developer Details
 * **Developed By:** Fenil Finava
-* **Enrollment Number:** 25CS022
+* **Enrollment Number:** 25CS011
 * **Branch:** B.Tech Computer Science & Engineering (CSE)
 * **Semester:** 3rd Semester
 * **Institute:** Chandubhai S. Patel Institute of Technology (CSPIT) - CHARUSAT
