@@ -299,3 +299,99 @@ button:hover, .btn:hover {
 .footer-actions .btn {
     margin-top: 0;
 }
+
+/* Rich Dashboard Enhancements */
+.rich-dashboard {
+    max-width: 960px;
+    width: 96%;
+}
+
+.dashboard-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.dashboard-header-bar h2 {
+    margin: 0;
+    text-align: left;
+}
+
+.dashboard-section {
+    margin: 25px 0;
+}
+
+.dashboard-section h3 {
+    margin: 0 0 12px 0;
+    color: #2d3748;
+    font-size: 17px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 13.5px;
+}
+
+.data-table th, .data-table td {
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #f7fafc;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.data-table tr:hover {
+    background-color: #f8fafc;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+.stat-box .stat-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #718096;
+    margin-bottom: 6px;
+}
+
+.stat-box .stat-val {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2d3748;
+}
+
+.event-box {
+    background: #fffaf0;
+    border-left: 4px solid #ed8936;
+    padding: 14px;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+
