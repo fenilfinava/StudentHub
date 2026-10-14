@@ -1,0 +1,142 @@
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #f2f2f2; 
+    margin: 0;
+    padding: 0;
+} 
+
+.container { 
+    width: 420px; 
+    margin: 50px auto; 
+    background: white; 
+    padding: 30px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+} 
+
+.container-wide {
+    width: 850px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2 { 
+    text-align: center; 
+    color: #333;
+    margin-top: 0;
+} 
+
+label { 
+    display: block; 
+    margin-top: 14px; 
+    color: #444;
+    font-weight: bold;
+    font-size: 14px;
+} 
+
+input { 
+    width: 100%; 
+    padding: 10px; 
+    margin-top: 6px; 
+    box-sizing: border-box; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+} 
+
+input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+button { 
+    width: 100%; 
+    padding: 12px; 
+    margin-top: 22px; 
+    cursor: pointer; 
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+} 
+
+button:hover { 
+    background-color: #45a049; 
+} 
+
+.links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.links a {
+    color: #0066cc;
+    text-decoration: none;
+    margin: 0 8px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Alert boxes */
+.alert-box {
+    width: 420px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.alert-success {
+    border-top: 5px solid #28a745;
+}
+
+.alert-danger {
+    border-top: 5px solid #dc3545;
+}
+
+.alert-success h2 { color: #28a745; }
+.alert-danger h2 { color: #dc3545; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 13px;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.hash-cell {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    padding: 2px 4px;
+    border-radius: 3px;
+    word-break: break-all;
+}
