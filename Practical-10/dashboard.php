@@ -27,13 +27,12 @@ if ($stmt) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Dashboard - Practical 10</title>
+    <title>User Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container dashboard-container">
-    <h2>Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</h2>
-    <p class="subtitle">Main Application Dashboard</p>
+    <h2>Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?></h2>
 
     <div class="user-card">
         <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION["email"]); ?></p>

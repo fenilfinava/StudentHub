@@ -46,13 +46,12 @@ if (!isset($_SESSION["user_id"]) && isset($_COOKIE["remember_token"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Login - Practical 10</title>
+    <title>Secure Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
     <h2>Secure Login</h2>
-    <p class="subtitle">ITUE203 - Practical 10 Authentication</p>
 
     <?php
     if (isset($_GET["error"])) {
@@ -91,16 +90,6 @@ if (!isset($_SESSION["user_id"]) && isset($_COOKIE["remember_token"])) {
 
         <button type="submit">Login</button>
     </form>
-
-    <div class="demo-box">
-        <strong>Demo Credentials:</strong><br>
-        👨‍🎓 Student: <code>student01@gmail.com</code> / <code>123456</code><br>
-        👑 Admin: <code>admin01@gmail.com</code> / <code>admin123</code>
-    </div>
-
-    <div class="footer-links">
-        <a href="../Practical-9/register.php">Need an account? Register</a>
-    </div>
 </div>
 </body>
 </html>
