@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <form method="POST" action="login.php">
         <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="admin01@gmail.com" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
         </div>
 
         <div class="form-group">
@@ -88,12 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <button type="submit" style="width:100%; margin-top:10px;">Sign In to Dashboard &rarr;</button>
     </form>
-
-    <div class="demo-credentials">
-        <strong>Login Credentials:</strong><br>
-        👑 Admin: <code>admin01@gmail.com</code> / <code>admin123</code><br>
-        👨‍🎓 Student: <code>student01@gmail.com</code> / <code>123456</code> (Restricted)
-    </div>
 </div>
 </body>
 </html>
