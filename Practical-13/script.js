@@ -1,13 +1,25 @@
 // Practical 13: StudentHub AJAX/Fetch CRUD & Dynamic RBAC Navigation
 const API_URL = 'api.php';
 
+const iconMap = {
+    'Student Dashboard': '📊',
+    'My Profile': '👤',
+    'Campus Events': '🎪',
+    'Faculty Portal': '🏛️',
+    'Student Attendance': '📋',
+    'Admin Console': '⚙️',
+    'Student Records (CRUD)': '👥',
+    'User Management': '🔐',
+    'System Settings': '🛠️'
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     handleRoleChange();
     loadData();
 });
 
 // -------------------------------------------------------------
-// 1. Role Change Handler (Updates Badge & Loads Menu)
+// 1. Role Change Handler (Updates Badge & Dynamic Menu)
 // -------------------------------------------------------------
 function handleRoleChange() {
     const roleSelector = document.getElementById('roleSelector');
@@ -17,13 +29,13 @@ function handleRoleChange() {
     if (roleBadge) {
         if (role === 'admin') {
             roleBadge.className = 'badge badge-admin';
-            roleBadge.innerText = 'ADMIN PORTAL';
+            roleBadge.innerText = '👑 ADMIN PORTAL';
         } else if (role === 'editor') {
             roleBadge.className = 'badge badge-editor';
-            roleBadge.innerText = 'FACULTY PORTAL';
+            roleBadge.innerText = '👨‍🏫 FACULTY PORTAL';
         } else {
             roleBadge.className = 'badge badge-student';
-            roleBadge.innerText = 'STUDENT PORTAL';
+            roleBadge.innerText = '👨‍🎓 STUDENT PORTAL';
         }
     }
 
@@ -37,6 +49,7 @@ async function loadMenu() {
     const roleSelector = document.getElementById('roleSelector');
     const role = roleSelector ? roleSelector.value : 'admin';
     const menuUl = document.getElementById('dynamicMenu');
+    const moduleCount = document.getElementById('moduleCount');
 
     try {
         const res = await fetch(`${API_URL}?action=get_menu&role=${encodeURIComponent(role)}`);
@@ -45,15 +58,26 @@ async function loadMenu() {
         menuUl.innerHTML = '';
 
         if (result.status === 'success' && Array.isArray(result.data)) {
+            if (moduleCount) {
+                moduleCount.innerText = `${result.data.length} Modules Active`;
+            }
+
             result.data.forEach(item => {
                 const li = document.createElement('li');
                 const a = document.createElement('a');
                 a.href = item.link;
-                a.textContent = item.title;
+
+                const icon = iconMap[item.title] || '🔗';
+                a.innerHTML = `<span style="font-size:14px;">${icon}</span> <span>${item.title}</span>`;
+
+                if (item.title === 'Student Records (CRUD)') {
+                    a.classList.add('active-link');
+                }
+
                 li.appendChild(a);
                 menuUl.appendChild(li);
             });
-            console.log(`[RBAC] Loaded ${result.data.length} menu links for: ${role}`);
+            console.log(`[RBAC] Loaded ${result.data.length} modules for: ${role}`);
         } else {
             showAlert('Failed to load navigation menu.', 'error');
         }
@@ -100,7 +124,7 @@ async function loadData() {
                 `;
                 tbody.appendChild(tr);
             });
-            console.log(`[CRUD] Asynchronously rendered ${result.data.length} student records without reload.`);
+            console.log(`[CRUD] Asynchronously rendered ${result.data.length} student records.`);
         } else {
             tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Failed to load records: ${result.message || ''}</td></tr>`;
             showAlert(result.message || 'Error loading records', 'error');

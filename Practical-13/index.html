@@ -8,43 +8,50 @@
 </head>
 <body>
 <div class="container">
-    <!-- Top Bar matching Practical 11 and Practical 12 -->
+    <!-- Top Bar with Enhanced Visual Hierarchy -->
     <div class="top-bar">
-        <div>
-            <h1>Student Management System</h1>
-            <p style="margin:4px 0 0 0; color:#718096; font-size:13.5px;">
-                Asynchronous CRUD & Dynamic Role-Based Access Control (Practical 13)
+        <div class="title-area">
+            <h1>
+                Student Management System
+                <span class="tag-spa">AJAX / Fetch API</span>
+            </h1>
+            <p>
+                StudentHub Asynchronous Portal | CSPIT - CHARUSAT (Practical 13)
             </p>
         </div>
-        <div class="user-badge">
-            <span class="badge badge-admin" id="roleBadge">ADMIN PORTAL</span>
-            <span style="font-size:13.5px; color:#4a5568;">👤 fenilfinava</span>
-            <a href="../Practical-10/logout.php" class="btn btn-danger" style="padding:6px 14px; font-size:13px;">Logout</a>
+        <div class="user-badge-cluster">
+            <span class="badge badge-admin" id="roleBadge">👑 ADMIN PORTAL</span>
+            <span class="user-name-pill">👤 fenilfinava</span>
+            <a href="../Practical-10/logout.php" class="btn-logout-pill">Logout ⎋</a>
         </div>
     </div>
 
-    <!-- Dynamic Role-Based Access Control Navigation Bar -->
-    <div class="nav-bar-container">
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <strong style="font-size:13px; color:#4a5568;">Navigation:</strong>
-            <ul class="nav-links" id="dynamicMenu">
-                <!-- Dynamically populated via script.js fetch() from api.php?action=get_menu -->
-            </ul>
+    <!-- Attractive Dynamic RBAC Navigation Card -->
+    <div class="nav-rbac-card">
+        <div class="nav-rbac-header">
+            <div class="nav-label-box">
+                <strong>🧭 Dynamic RBAC Navigation:</strong>
+                <span class="module-count" id="moduleCount">9 Modules</span>
+            </div>
+            <div class="role-switcher-box">
+                <label for="roleSelector">Active Role:</label>
+                <select id="roleSelector" onchange="handleRoleChange()">
+                    <option value="user">👨‍🎓 Student</option>
+                    <option value="editor">👨‍🏫 Faculty</option>
+                    <option value="admin" selected>👑 Admin (Full Access)</option>
+                </select>
+            </div>
         </div>
-        <div class="role-switcher">
-            <label for="roleSelector">Active Role:</label>
-            <select id="roleSelector" onchange="handleRoleChange()">
-                <option value="user">Student</option>
-                <option value="editor">Faculty</option>
-                <option value="admin" selected>Admin</option>
-            </select>
-        </div>
+
+        <ul class="nav-links-grid" id="dynamicMenu">
+            <!-- Dynamically populated via script.js fetch() with icon pills -->
+        </ul>
     </div>
 
     <!-- Live Asynchronous Notification Alert Banners -->
     <div id="statusAlert" style="display:none;"></div>
 
-    <!-- Add / Edit Student Section -->
+    <!-- Add / Edit Student Form Card -->
     <div class="card">
         <h2 id="formTitle">Add New Student</h2>
         <form id="crudForm" onsubmit="handleFormSubmit(event)">
@@ -82,11 +89,11 @@
         </form>
     </div>
 
-    <!-- Student Records Table Section -->
-    <div class="card" style="padding: 20px 20px 10px 20px;">
+    <!-- Student Records Table Card -->
+    <div class="card" style="padding: 22px 22px 14px 22px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
             <h2 style="margin:0;">Student Records</h2>
-            <button type="button" class="btn btn-secondary" style="padding:6px 14px; font-size:12.5px;" onclick="loadData()">🔄 Refresh Table</button>
+            <button type="button" class="btn btn-secondary" style="padding:7px 16px; font-size:12.5px;" onclick="loadData()">🔄 Refresh Table</button>
         </div>
 
         <table>
