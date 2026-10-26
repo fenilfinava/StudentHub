@@ -21,7 +21,7 @@
         </div>
         <div class="user-badge-cluster">
             <span class="badge badge-admin" id="roleBadge">👑 ADMIN PORTAL</span>
-            <span class="user-name-pill">👤 fenilfinava</span>
+            <span class="user-name-pill" id="userNamePill">👤 fenilfinava (Admin)</span>
             <a href="../Practical-10/logout.php" class="btn-logout-pill">Logout ⎋</a>
         </div>
     </div>
@@ -31,13 +31,13 @@
         <div class="nav-rbac-header">
             <div class="nav-label-box">
                 <strong>🧭 Dynamic RBAC Navigation:</strong>
-                <span class="module-count" id="moduleCount">9 Modules</span>
+                <span class="module-count" id="moduleCount">9 Modules Active</span>
             </div>
             <div class="role-switcher-box">
                 <label for="roleSelector">Active Role:</label>
                 <select id="roleSelector" onchange="handleRoleChange()">
-                    <option value="user">👨‍🎓 Student</option>
-                    <option value="editor">👨‍🏫 Faculty</option>
+                    <option value="user">👨‍🎓 Student (Read-Only)</option>
+                    <option value="editor">👨‍🏫 Faculty (Edit Access)</option>
                     <option value="admin" selected>👑 Admin (Full Access)</option>
                 </select>
             </div>
@@ -52,8 +52,12 @@
     <div id="statusAlert" style="display:none;"></div>
 
     <!-- Add / Edit Student Form Card -->
-    <div class="card">
+    <div class="card" id="formCard">
         <h2 id="formTitle">Add New Student</h2>
+        
+        <!-- Live RBAC Permission Warning Banner -->
+        <div id="rbacNotice" style="display:none;"></div>
+
         <form id="crudForm" onsubmit="handleFormSubmit(event)">
             <input type="hidden" id="recordId">
 

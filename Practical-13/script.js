@@ -15,31 +15,99 @@ const iconMap = {
 
 document.addEventListener('DOMContentLoaded', () => {
     handleRoleChange();
-    loadData();
 });
 
 // -------------------------------------------------------------
-// 1. Role Change Handler (Updates Badge & Dynamic Menu)
+// 1. Role Change Handler (Updates Badge, Form, & Table Permissions)
 // -------------------------------------------------------------
 function handleRoleChange() {
     const roleSelector = document.getElementById('roleSelector');
     const role = roleSelector ? roleSelector.value : 'admin';
     const roleBadge = document.getElementById('roleBadge');
+    const userNamePill = document.getElementById('userNamePill');
+    const rbacNotice = document.getElementById('rbacNotice');
+    const submitBtn = document.getElementById('submitBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
 
-    if (roleBadge) {
+    const inputs = ['recordName', 'recordEmail', 'recordCourse', 'recordGender'];
+
+    // Update Top Bar Badges and User Profile
+    if (roleBadge && userNamePill) {
         if (role === 'admin') {
             roleBadge.className = 'badge badge-admin';
             roleBadge.innerText = '👑 ADMIN PORTAL';
+            userNamePill.innerText = '👤 fenilfinava (Admin)';
         } else if (role === 'editor') {
             roleBadge.className = 'badge badge-editor';
             roleBadge.innerText = '👨‍🏫 FACULTY PORTAL';
+            userNamePill.innerText = '👤 prof_patel (Faculty)';
         } else {
             roleBadge.className = 'badge badge-student';
             roleBadge.innerText = '👨‍🎓 STUDENT PORTAL';
+            userNamePill.innerText = '👤 fenilfinava (25CS011)';
         }
     }
 
+    // Enforce Form Access Control based on Role
+    if (role === 'user') {
+        // STUDENT: Read-Only mode
+        if (rbacNotice) {
+            rbacNotice.style.display = 'flex';
+            rbacNotice.className = 'rbac-lock-banner';
+            rbacNotice.innerHTML = '🔒 <strong>Read-Only Student View:</strong> As a student, you have viewing privileges only. Creating, modifying, or deleting records is restricted to Faculty and Administrators.';
+        }
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.disabled = true;
+        });
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerText = '🔒 Adding Restricted (Students)';
+            submitBtn.className = 'btn btn-secondary';
+        }
+        if (cancelBtn) cancelBtn.style.display = 'none';
+        showAlert('👨‍🎓 Active Role switched to Student: Read-only mode active (3 modules). Adding/Editing locked.', 'info', 4500);
+
+    } else if (role === 'editor') {
+        // FACULTY: Can Add/Edit, cannot Delete
+        if (rbacNotice) {
+            rbacNotice.style.display = 'flex';
+            rbacNotice.className = 'rbac-lock-banner';
+            rbacNotice.style.background = '#f5f3ff';
+            rbacNotice.style.borderColor = '#ddd6fe';
+            rbacNotice.style.color = '#5b21b6';
+            rbacNotice.innerHTML = '👨‍🏫 <strong>Faculty View:</strong> You have permission to view, add, and update student details. Permanent record deletion is restricted to Administrators.';
+        }
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.disabled = false;
+        });
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = '+ Add Student';
+            submitBtn.className = 'btn btn-success';
+        }
+        showAlert('👨‍🏫 Active Role switched to Faculty: 5 modules enabled. Add/Edit permissions granted.', 'info', 4500);
+
+    } else {
+        // ADMIN: Full Access
+        if (rbacNotice) {
+            rbacNotice.style.display = 'none';
+        }
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.disabled = false;
+        });
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = '+ Add Student';
+            submitBtn.className = 'btn btn-success';
+        }
+        showAlert('👑 Active Role switched to Admin: Full access granted across all 9 modules & complete CRUD permissions.', 'success', 4500);
+    }
+
     loadMenu();
+    loadData();
 }
 
 // -------------------------------------------------------------
@@ -88,14 +156,17 @@ async function loadMenu() {
 }
 
 // -------------------------------------------------------------
-// 3. Read Student Records (Fetch GET without page reload)
+// 3. Read Student Records (Fetch GET with Role Awareness)
 // -------------------------------------------------------------
 async function loadData() {
+    const roleSelector = document.getElementById('roleSelector');
+    const role = roleSelector ? roleSelector.value : 'admin';
     const tbody = document.getElementById('itemsTableBody');
+
     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:25px; color:#718096; font-style:italic;">⏳ Loading student records from database...</td></tr>`;
 
     try {
-        const res = await fetch(`${API_URL}?action=read&type=students`);
+        const res = await fetch(`${API_URL}?action=read&type=students&role=${encodeURIComponent(role)}`);
         const result = await res.json();
 
         tbody.innerHTML = '';
@@ -109,6 +180,28 @@ async function loadData() {
             result.data.forEach(row => {
                 const tr = document.createElement('tr');
                 const statusClass = (row.status || 'Active').toLowerCase() === 'active' ? 'badge-status-active' : 'badge-status-inactive';
+
+                // Render Actions column based on Role
+                let actionHtml = '';
+                if (role === 'user') {
+                    // Students see Read-Only badge
+                    actionHtml = `<span class="badge-restricted">🔒 Read-Only</span>`;
+                } else if (role === 'editor') {
+                    // Faculty can Edit, but cannot Delete
+                    actionHtml = `
+                        <a href="javascript:void(0)" onclick="editStudent(${row.id}, '${escapeJs(row.name)}', '${escapeJs(row.email)}', '${escapeJs(row.course)}', '${escapeJs(row.gender)}')">Edit</a>
+                        |
+                        <span style="color:#a0aec0; font-size:12px; font-style:italic;" title="Only Admins can delete">Admin Only</span>
+                    `;
+                } else {
+                    // Admin has full Edit & Delete permissions
+                    actionHtml = `
+                        <a href="javascript:void(0)" onclick="editStudent(${row.id}, '${escapeJs(row.name)}', '${escapeJs(row.email)}', '${escapeJs(row.course)}', '${escapeJs(row.gender)}')">Edit</a>
+                        |
+                        <a href="javascript:void(0)" class="btn-delete" onclick="deleteStudent(${row.id})">Delete</a>
+                    `;
+                }
+
                 tr.innerHTML = `
                     <td>${row.id}</td>
                     <td><strong>${escapeHtml(row.name)}</strong></td>
@@ -116,15 +209,11 @@ async function loadData() {
                     <td>${escapeHtml(row.course)}</td>
                     <td>${escapeHtml(row.gender)}</td>
                     <td><span class="${statusClass}">${escapeHtml(row.status || 'Active')}</span></td>
-                    <td class="action-links">
-                        <a href="javascript:void(0)" onclick="editStudent(${row.id}, '${escapeJs(row.name)}', '${escapeJs(row.email)}', '${escapeJs(row.course)}', '${escapeJs(row.gender)}')">Edit</a>
-                        |
-                        <a href="javascript:void(0)" class="btn-delete" onclick="deleteStudent(${row.id})">Delete</a>
-                    </td>
+                    <td class="action-links">${actionHtml}</td>
                 `;
                 tbody.appendChild(tr);
             });
-            console.log(`[CRUD] Asynchronously rendered ${result.data.length} student records.`);
+            console.log(`[CRUD] Asynchronously rendered ${result.data.length} student records for role: ${role}.`);
         } else {
             tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Failed to load records: ${result.message || ''}</td></tr>`;
             showAlert(result.message || 'Error loading records', 'error');
@@ -142,6 +231,14 @@ async function loadData() {
 async function handleFormSubmit(event) {
     event.preventDefault(); // Prevent standard browser page reload
 
+    const roleSelector = document.getElementById('roleSelector');
+    const role = roleSelector ? roleSelector.value : 'admin';
+
+    if (role === 'user') {
+        showAlert('⚠️ Access Denied: Students cannot create or modify records.', 'error');
+        return;
+    }
+
     const id = document.getElementById('recordId').value;
     const name = document.getElementById('recordName').value.trim();
     const email = document.getElementById('recordEmail').value.trim();
@@ -155,13 +252,13 @@ async function handleFormSubmit(event) {
     }
 
     const action = id ? 'update' : 'create';
-    const payload = { id, name, email, course, gender };
+    const payload = { id, name, email, course, gender, role };
 
     submitBtn.disabled = true;
     showAlert(id ? '⏳ Updating student details via Fetch API...' : '⏳ Adding new student via Fetch API...', 'loading');
 
     try {
-        const res = await fetch(`${API_URL}?action=${action}&type=students`, {
+        const res = await fetch(`${API_URL}?action=${action}&type=students&role=${encodeURIComponent(role)}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -188,6 +285,14 @@ async function handleFormSubmit(event) {
 // 5. Populate Form for Editing Student
 // -------------------------------------------------------------
 function editStudent(id, name, email, course, gender) {
+    const roleSelector = document.getElementById('roleSelector');
+    const role = roleSelector ? roleSelector.value : 'admin';
+
+    if (role === 'user') {
+        showAlert('⚠️ Access Denied: Students do not have editing permissions.', 'error');
+        return;
+    }
+
     document.getElementById('recordId').value = id;
     document.getElementById('recordName').value = name;
     document.getElementById('recordEmail').value = email;
@@ -196,6 +301,7 @@ function editStudent(id, name, email, course, gender) {
 
     document.getElementById('formTitle').innerText = 'Edit Student Details';
     const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = false;
     submitBtn.innerText = 'Save Changes';
     submitBtn.className = 'btn btn-success';
     document.getElementById('cancelBtn').style.display = 'inline-block';
@@ -206,9 +312,17 @@ function editStudent(id, name, email, course, gender) {
 }
 
 // -------------------------------------------------------------
-// 6. Delete Student Record (Fetch POST with Confirmation)
+// 6. Delete Student Record (Fetch POST with Role Checking)
 // -------------------------------------------------------------
 async function deleteStudent(id) {
+    const roleSelector = document.getElementById('roleSelector');
+    const role = roleSelector ? roleSelector.value : 'admin';
+
+    if (role !== 'admin') {
+        showAlert('⚠️ Access Denied: Only Administrators can delete student records.', 'error');
+        return;
+    }
+
     if (!confirm('Are you sure you want to delete this student record?')) {
         return;
     }
@@ -216,10 +330,10 @@ async function deleteStudent(id) {
     showAlert(`⏳ Deleting student #${id} via Fetch API...`, 'loading');
 
     try {
-        const res = await fetch(`${API_URL}?action=delete&type=students`, {
+        const res = await fetch(`${API_URL}?action=delete&type=students&role=${encodeURIComponent(role)}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id })
+            body: JSON.stringify({ id, role })
         });
 
         const result = await res.json();
@@ -240,12 +354,23 @@ async function deleteStudent(id) {
 // 7. Reset Form State
 // -------------------------------------------------------------
 function resetForm() {
+    const roleSelector = document.getElementById('roleSelector');
+    const role = roleSelector ? roleSelector.value : 'admin';
+
     document.getElementById('recordId').value = '';
     document.getElementById('crudForm').reset();
     document.getElementById('formTitle').innerText = 'Add New Student';
     const submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerText = '+ Add Student';
-    submitBtn.className = 'btn btn-success';
+
+    if (role === 'user') {
+        submitBtn.disabled = true;
+        submitBtn.innerText = '🔒 Adding Restricted (Students)';
+        submitBtn.className = 'btn btn-secondary';
+    } else {
+        submitBtn.disabled = false;
+        submitBtn.innerText = '+ Add Student';
+        submitBtn.className = 'btn btn-success';
+    }
     document.getElementById('cancelBtn').style.display = 'none';
 }
 
