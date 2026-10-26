@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AJAX CRUD & RBAC (Practical 13)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="brand">
+        <h2>Admin Dashboard</h2>
+        <span class="sub-badge">AJAX CRUD & RBAC</span>
+    </div>
+
+    <!-- Dynamic Role-Based Navigation -->
+    <nav>
+        <ul id="dynamicMenu"></ul>
+    </nav>
+
+    <!-- Role Switcher -->
+    <div class="role-control">
+        <label for="roleSelector">Active Role:</label>
+        <select id="roleSelector" onchange="loadMenu()">
+            <option value="user">User</option>
+            <option value="editor">Editor</option>
+            <option value="admin" selected>Admin</option>
+        </select>
+    </div>
+</header>
+
+<div class="container">
+    <!-- CRUD Form (Add / Edit) -->
+    <div class="card form-card">
+        <div class="card-header">
+            <h3 id="formTitle">Add Item</h3>
+            <span id="formModeBadge" style="font-size:11px; padding:2px 8px; border-radius:10px; background:#e2e8f0; color:#475569; font-weight:600;">CREATE</span>
+        </div>
+
+        <!-- In-page Live Alert Banner (Success, Error & Loading States) -->
+        <div id="statusAlert" style="display:none;"></div>
+
+        <form id="itemForm" onsubmit="saveItem(event)">
+            <input type="hidden" id="itemId">
+
+            <div class="form-group">
+                <label for="itemName">Item Name</label>
+                <input type="text" id="itemName" placeholder="e.g. Wireless Headset" required>
+            </div>
+
+            <div class="form-group">
+                <label for="itemCategory">Category</label>
+                <input type="text" id="itemCategory" placeholder="e.g. Electronics, Accessories" required>
+            </div>
+
+            <div class="form-group">
+                <label for="itemPrice">Price ($)</label>
+                <input type="number" step="0.01" id="itemPrice" placeholder="e.g. 99.99" required>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn btn-primary">Save Item</button>
+            <button type="button" id="cancelBtn" class="btn btn-cancel" onclick="resetForm()" style="display:none;">Cancel Edit</button>
+        </form>
+
+        <!-- Testing Tools for Lab Report Screenshots -->
+        <div style="margin-top:20px; padding-top:14px; border-top:1px dashed #cbd5e1; font-size:12px; color:#64748b;">
+            <strong>Lab Report Helpers:</strong>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+                <button type="button" class="btn btn-sm" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;" onclick="simulateLoadingState()">Simulate Loading State</button>
+                <button type="button" class="btn btn-sm" style="background:#fee2e2; color:#b91c1c; border:1px solid #fecaca;" onclick="simulateErrorState()">Simulate Error State</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card table-card">
+        <div class="card-header">
+            <h3>Inventory List</h3>
+            <button type="button" class="btn btn-sm" style="background:#f1f5f9; color:#334155; border:1px solid #cbd5e1;" onclick="loadItems()">🔄 Refresh Table</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px;">ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th style="width: 110px;">Price</th>
+                    <th style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="itemsTableBody">
+                <!-- Dynamically populated via script.js fetch() -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="meta-footer">
+    CSPIT - Charotar University of Science and Technology (CHARUSAT) | ITUE203 Practical 13
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
