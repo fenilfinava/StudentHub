@@ -3,102 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - AJAX CRUD & RBAC (Practical 13)</title>
+    <title>StudentHub - AJAX/Fetch CRUD & Dynamic RBAC (Practical 13)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <div class="brand">
-        <h2>Admin Dashboard</h2>
-        <span class="sub-badge">AJAX CRUD & RBAC</span>
+    <div class="brand-section">
+        <div class="brand-logo-badge">SH</div>
+        <div class="brand-title">
+            <h2>StudentHub Portal</h2>
+            <p>CSPIT - CHARUSAT | Asynchronous Management Console (Practical 13)</p>
+        </div>
     </div>
 
-    <!-- Dynamic Role-Based Navigation -->
+    <!-- Dynamic Role-Based Access Control Navigation Menu -->
     <nav>
-        <ul id="dynamicMenu"></ul>
+        <ul id="dynamicMenu">
+            <!-- Populated via script.js fetch() from api.php?action=get_menu -->
+        </ul>
     </nav>
 
     <!-- Role Switcher -->
-    <div class="role-control">
+    <div class="role-box">
         <label for="roleSelector">Active Role:</label>
         <select id="roleSelector" onchange="loadMenu()">
-            <option value="user">User</option>
-            <option value="editor">Editor</option>
-            <option value="admin" selected>Admin</option>
+            <option value="user">User (Student)</option>
+            <option value="editor">Editor (Faculty)</option>
+            <option value="admin" selected>Admin (Full Access)</option>
         </select>
     </div>
 </header>
 
-<div class="container">
-    <!-- CRUD Form (Add / Edit) -->
-    <div class="card form-card">
+<!-- Main Container -->
+<div class="dashboard-grid">
+    <!-- CRUD Form Card -->
+    <div class="card">
         <div class="card-header">
-            <h3 id="formTitle">Add Item</h3>
-            <span id="formModeBadge" style="font-size:11px; padding:2px 8px; border-radius:10px; background:#e2e8f0; color:#475569; font-weight:600;">CREATE</span>
+            <h3 id="formTitle">Add New Student</h3>
+            <span id="formModeBadge" class="mode-badge">CREATE</span>
         </div>
 
-        <!-- In-page Live Alert Banner (Success, Error & Loading States) -->
+        <!-- In-page Live Notification Alert (Success, Error & Loading States) -->
         <div id="statusAlert" style="display:none;"></div>
 
-        <form id="itemForm" onsubmit="saveItem(event)">
-            <input type="hidden" id="itemId">
+        <!-- StudentHub Student Form -->
+        <form id="crudForm" onsubmit="handleFormSubmit(event)">
+            <input type="hidden" id="recordId">
 
-            <div class="form-group">
-                <label for="itemName">Item Name</label>
-                <input type="text" id="itemName" placeholder="e.g. Wireless Headset" required>
+            <div id="studentFields">
+                <div class="form-group">
+                    <label for="recordName">Student Full Name</label>
+                    <input type="text" id="recordName" placeholder="e.g. Fenil Finava" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="recordEmail">Email Address</label>
+                    <input type="email" id="recordEmail" placeholder="e.g. fenil@charusat.edu.in" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="recordCourse">Course / Branch</label>
+                    <select id="recordCourse" required>
+                        <option value="">Select Enrolled Course</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Cyber Security">Cyber Security</option>
+                        <option value="AI & Machine Learning">AI & Machine Learning</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="recordGender">Gender</label>
+                    <select id="recordGender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="itemCategory">Category</label>
-                <input type="text" id="itemCategory" placeholder="e.g. Electronics, Accessories" required>
+            <!-- Optional Items Fields (PDF Specification mode) -->
+            <div id="itemFields" style="display:none;">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" placeholder="e.g. Mechanical Keyboard">
+                </div>
+                <div class="form-group">
+                    <label for="itemCategory">Category</label>
+                    <input type="text" id="itemCategory" placeholder="e.g. Electronics, Accessories">
+                </div>
+                <div class="form-group">
+                    <label for="itemPrice">Price ($)</label>
+                    <input type="number" step="0.01" id="itemPrice" placeholder="e.g. 85.00">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="itemPrice">Price ($)</label>
-                <input type="number" step="0.01" id="itemPrice" placeholder="e.g. 99.99" required>
-            </div>
-
-            <button type="submit" id="submitBtn" class="btn btn-primary">Save Item</button>
-            <button type="button" id="cancelBtn" class="btn btn-cancel" onclick="resetForm()" style="display:none;">Cancel Edit</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary">Save Student Record</button>
+            <button type="button" id="cancelBtn" class="btn btn-secondary" onclick="resetForm()" style="display:none;">Cancel Edit</button>
         </form>
 
         <!-- Testing Tools for Lab Report Screenshots -->
-        <div style="margin-top:20px; padding-top:14px; border-top:1px dashed #cbd5e1; font-size:12px; color:#64748b;">
-            <strong>Lab Report Helpers:</strong>
-            <div style="display:flex; gap:6px; margin-top:8px;">
-                <button type="button" class="btn btn-sm" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;" onclick="simulateLoadingState()">Simulate Loading State</button>
-                <button type="button" class="btn btn-sm" style="background:#fee2e2; color:#b91c1c; border:1px solid #fecaca;" onclick="simulateErrorState()">Simulate Error State</button>
+        <div style="margin-top:22px; padding-top:14px; border-top:1px dashed #cbd5e1; font-size:12px; color:#64748b;">
+            <strong>📸 Lab Report Screenshot Helpers:</strong>
+            <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-sm" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-size:11.5px; padding:5px 9px;" onclick="simulateLoadingState()">Simulate Loading State</button>
+                <button type="button" class="btn btn-sm" style="background:#fee2e2; color:#b91c1c; border:1px solid #fecaca; font-size:11.5px; padding:5px 9px;" onclick="simulateErrorState()">Simulate Validation Error</button>
             </div>
         </div>
     </div>
 
-    <!-- Data Table -->
-    <div class="card table-card">
+    <!-- Data Table Card -->
+    <div class="card">
         <div class="card-header">
-            <h3>Inventory List</h3>
-            <button type="button" class="btn btn-sm" style="background:#f1f5f9; color:#334155; border:1px solid #cbd5e1;" onclick="loadItems()">🔄 Refresh Table</button>
+            <div>
+                <h3 id="tableTitle">Student Records (Live MySQL)</h3>
+                <p style="font-size:12px; color:#64748b; margin-top:2px;">Asynchronous Zero-Reload Table synchronized with StudentHub database</p>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px;">
+                <!-- Entity View Switcher -->
+                <div class="tabs-container">
+                    <button type="button" id="tabStudents" class="tab-btn active" onclick="switchEntity('students')">👨‍🎓 Students (StudentHub)</button>
+                    <button type="button" id="tabItems" class="tab-btn" onclick="switchEntity('items')">📦 Campus Items (PDF Spec)</button>
+                </div>
+                <button type="button" class="btn" style="background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; font-size:12px; padding:6px 10px;" onclick="loadData()">🔄 Refresh</button>
+            </div>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 50px;">ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th style="width: 110px;">Price</th>
-                    <th style="width: 150px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="itemsTableBody">
-                <!-- Dynamically populated via script.js fetch() -->
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead id="tableHead">
+                    <!-- Populated dynamically based on entity -->
+                </thead>
+                <tbody id="itemsTableBody">
+                    <!-- Dynamically populated via script.js fetch() -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<footer class="meta-footer">
-    CSPIT - Charotar University of Science and Technology (CHARUSAT) | ITUE203 Practical 13
+<footer>
+    CSPIT - Chandubhai S. Patel Institute of Technology | Department of Computer Science & Engineering<br>
+    CHARUSAT University | Fenil Finava (25CS011) | Web Development Frameworks (ITUE203)
 </footer>
 
 <script src="script.js"></script>

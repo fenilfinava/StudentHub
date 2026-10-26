@@ -1,6 +1,7 @@
 <?php
+// Practical 13: Database Connection using PDO for StudentHub
 $host = 'localhost';
-$db   = 'dashboard_db';
+$db   = 'student_db';
 $user = 'root';
 $pass = '';
 
