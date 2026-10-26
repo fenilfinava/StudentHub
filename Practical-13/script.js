@@ -18,18 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -------------------------------------------------------------
-// 1. Role Change Handler (Updates Badge, Form, & Table Permissions)
+// 1. Role Change Handler (Visibility & Permissions Enforced)
 // -------------------------------------------------------------
 function handleRoleChange() {
     const roleSelector = document.getElementById('roleSelector');
     const role = roleSelector ? roleSelector.value : 'admin';
     const roleBadge = document.getElementById('roleBadge');
     const userNamePill = document.getElementById('userNamePill');
-    const rbacNotice = document.getElementById('rbacNotice');
-    const submitBtn = document.getElementById('submitBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
+    const formCard = document.getElementById('formCard');
+    const statusAlert = document.getElementById('statusAlert');
 
-    const inputs = ['recordName', 'recordEmail', 'recordCourse', 'recordGender'];
+    // Hide any old status alert banner when role changes
+    if (statusAlert) {
+        statusAlert.style.display = 'none';
+    }
 
     // Update Top Bar Badges and User Profile
     if (roleBadge && userNamePill) {
@@ -48,62 +50,14 @@ function handleRoleChange() {
         }
     }
 
-    // Enforce Form Access Control based on Role
-    if (role === 'user') {
-        // STUDENT: Read-Only mode
-        if (rbacNotice) {
-            rbacNotice.style.display = 'flex';
-            rbacNotice.className = 'rbac-lock-banner';
-            rbacNotice.innerHTML = '🔒 <strong>Read-Only Student View:</strong> As a student, you have viewing privileges only. Creating, modifying, or deleting records is restricted to Faculty and Administrators.';
+    // Role-Based UI Display: Only Admins can see the "Add New Student" form
+    if (formCard) {
+        if (role === 'admin') {
+            formCard.style.display = 'block';
+        } else {
+            // Students and Faculty cannot register students - form is hidden
+            formCard.style.display = 'none';
         }
-        inputs.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.disabled = true;
-        });
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerText = '🔒 Adding Restricted (Students)';
-            submitBtn.className = 'btn btn-secondary';
-        }
-        if (cancelBtn) cancelBtn.style.display = 'none';
-        showAlert('👨‍🎓 Active Role switched to Student: Read-only mode active (3 modules). Adding/Editing locked.', 'info', 4500);
-
-    } else if (role === 'editor') {
-        // FACULTY: Can Add/Edit, cannot Delete
-        if (rbacNotice) {
-            rbacNotice.style.display = 'flex';
-            rbacNotice.className = 'rbac-lock-banner';
-            rbacNotice.style.background = '#f5f3ff';
-            rbacNotice.style.borderColor = '#ddd6fe';
-            rbacNotice.style.color = '#5b21b6';
-            rbacNotice.innerHTML = '👨‍🏫 <strong>Faculty View:</strong> You have permission to view, add, and update student details. Permanent record deletion is restricted to Administrators.';
-        }
-        inputs.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.disabled = false;
-        });
-        if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerText = '+ Add Student';
-            submitBtn.className = 'btn btn-success';
-        }
-        showAlert('👨‍🏫 Active Role switched to Faculty: 5 modules enabled. Add/Edit permissions granted.', 'info', 4500);
-
-    } else {
-        // ADMIN: Full Access
-        if (rbacNotice) {
-            rbacNotice.style.display = 'none';
-        }
-        inputs.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.disabled = false;
-        });
-        if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerText = '+ Add Student';
-            submitBtn.className = 'btn btn-success';
-        }
-        showAlert('👑 Active Role switched to Admin: Full access granted across all 9 modules & complete CRUD permissions.', 'success', 4500);
     }
 
     loadMenu();
@@ -173,7 +127,7 @@ async function loadData() {
 
         if (result.status === 'success' && Array.isArray(result.data)) {
             if (result.data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:25px; color:#718096;">No student records found. Add one above.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:25px; color:#718096;">No student records found.</td></tr>`;
                 return;
             }
 
@@ -184,14 +138,12 @@ async function loadData() {
                 // Render Actions column based on Role
                 let actionHtml = '';
                 if (role === 'user') {
-                    // Students see Read-Only badge
-                    actionHtml = `<span class="badge-restricted">🔒 Read-Only</span>`;
+                    // Students see View Only badge (no edit/delete)
+                    actionHtml = `<span class="badge-restricted">View Only</span>`;
                 } else if (role === 'editor') {
-                    // Faculty can Edit, but cannot Delete
+                    // Faculty can Edit details
                     actionHtml = `
                         <a href="javascript:void(0)" onclick="editStudent(${row.id}, '${escapeJs(row.name)}', '${escapeJs(row.email)}', '${escapeJs(row.course)}', '${escapeJs(row.gender)}')">Edit</a>
-                        |
-                        <span style="color:#a0aec0; font-size:12px; font-style:italic;" title="Only Admins can delete">Admin Only</span>
                     `;
                 } else {
                     // Admin has full Edit & Delete permissions
@@ -234,8 +186,8 @@ async function handleFormSubmit(event) {
     const roleSelector = document.getElementById('roleSelector');
     const role = roleSelector ? roleSelector.value : 'admin';
 
-    if (role === 'user') {
-        showAlert('⚠️ Access Denied: Students cannot create or modify records.', 'error');
+    if (role !== 'admin') {
+        showAlert('⚠️ Access Denied: Only Administrators can create records.', 'error');
         return;
     }
 
@@ -293,6 +245,9 @@ function editStudent(id, name, email, course, gender) {
         return;
     }
 
+    const formCard = document.getElementById('formCard');
+    if (formCard) formCard.style.display = 'block';
+
     document.getElementById('recordId').value = id;
     document.getElementById('recordName').value = name;
     document.getElementById('recordEmail').value = email;
@@ -306,7 +261,6 @@ function editStudent(id, name, email, course, gender) {
     submitBtn.className = 'btn btn-success';
     document.getElementById('cancelBtn').style.display = 'inline-block';
 
-    showAlert(`✏️ Editing student #${id} (${name}). Update details and click 'Save Changes'.`, 'loading', 4000);
     document.getElementById('recordName').focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -362,20 +316,20 @@ function resetForm() {
     document.getElementById('formTitle').innerText = 'Add New Student';
     const submitBtn = document.getElementById('submitBtn');
 
-    if (role === 'user') {
-        submitBtn.disabled = true;
-        submitBtn.innerText = '🔒 Adding Restricted (Students)';
-        submitBtn.className = 'btn btn-secondary';
-    } else {
-        submitBtn.disabled = false;
-        submitBtn.innerText = '+ Add Student';
-        submitBtn.className = 'btn btn-success';
-    }
+    submitBtn.disabled = false;
+    submitBtn.innerText = '+ Add Student';
+    submitBtn.className = 'btn btn-success';
     document.getElementById('cancelBtn').style.display = 'none';
+
+    // If role is not admin, hide form card after cancel
+    const formCard = document.getElementById('formCard');
+    if (formCard && role !== 'admin') {
+        formCard.style.display = 'none';
+    }
 }
 
 // -------------------------------------------------------------
-// 8. Live Notification Alerts
+// 8. Live Notification Alerts (Only shown on form action/error)
 // -------------------------------------------------------------
 let alertTimer = null;
 function showAlert(message, type = 'info', autoCloseMs = 5000) {
