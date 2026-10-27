@@ -17,19 +17,19 @@ $role     = $_SESSION["role"] ?? "student";
 log_audit($conn, $user_id, $username, "VIEW_DASHBOARD", "Student viewed academic dashboard.", "SUCCESS");
 
 // Fetch student profile details from students table
-$student_name   = "Fenil Finava";
+$student_name   = $username ?: "Student";
 $enrollment_no  = "25CS011";
 $course         = "B.Tech CSE";
 $semester       = "3rd Semester";
 
-$st_stmt = $conn->prepare("SELECT enrollment_no, name, course, semester FROM students WHERE email = ? LIMIT 1");
+$st_stmt = $conn->prepare("SELECT enrollment_no, name, course, semester FROM students WHERE email = ? OR name = ? LIMIT 1");
 if ($st_stmt) {
-    $st_stmt->bind_param("s", $email);
+    $st_stmt->bind_param("ss", $email, $username);
     $st_stmt->execute();
     $res = $st_stmt->get_result();
     if ($row = $res->fetch_assoc()) {
-        $student_name  = $row["name"];
-        $enrollment_no = $row["enrollment_no"] ?: "25CS011";
+        $student_name  = $row["name"] ?: $student_name;
+        $enrollment_no = $row["enrollment_no"] ?: $enrollment_no;
         $course        = "B.Tech " . (strpos($row["course"], "Computer") !== false ? "CSE" : $row["course"]);
         $semester      = ($row["semester"] ?: 3) . "rd Semester";
     }

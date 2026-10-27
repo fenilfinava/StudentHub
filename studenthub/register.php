@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email        = trim($_POST["email"] ?? "");
     $mobile       = trim($_POST["mobile"] ?? "");
     $gender       = trim($_POST["gender"] ?? "Male");
-    $course       = trim($_POST["course"] ?? "");
+    $course       = trim($_POST["course"] ?? "Computer Science Engineering");
     $adm_year     = trim($_POST["adm_year"] ?? "2026");
     $password     = $_POST["password"] ?? "";
     $confirm_pass = $_POST["confirm_password"] ?? "";
@@ -33,14 +33,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $check->store_result();
 
         if ($check->num_rows > 0) {
-            $error = "An account with that email address already exists.";
+            $error = "An account with that email address already exists. Please log in.";
             $check->close();
         } else {
             $check->close();
             // Generate username from email or name
             $username = strtolower(explode("@", $email)[0]);
-            // Generate Enrollment No (e.g., 25CS + random 3 digits)
-            $enrollment_no = "25CS" . sprintf("%03d", rand(15, 999));
+            
+            // Generate Enrollment No based on Year and Course
+            $yr_prefix = substr($adm_year, 2, 2);
+            $dept_code = "CS";
+            if (stripos($course, "Information") !== false || stripos($course, "IT") !== false) {
+                $dept_code = "IT";
+            } elseif (stripos($course, "Data") !== false) {
+                $dept_code = "DS";
+            } elseif (stripos($course, "Web") !== false) {
+                $dept_code = "WD";
+            }
+            $enrollment_no = $yr_prefix . $dept_code . sprintf("%03d", rand(101, 899));
             $hashed = password_hash($password, PASSWORD_BCRYPT);
 
             // Insert into users table
@@ -58,10 +68,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $s_stmt->execute();
                 $s_stmt->close();
 
-                // Log audit
-                log_audit($conn, $new_user_id, $username, "USER_REGISTER", "New student self-registered: $name ($email)", "SUCCESS");
+                // Clear old session & auto-login new student immediately!
+                session_unset();
+                session_regenerate_id(true);
+                $_SESSION["user_id"]  = $new_user_id;
+                $_SESSION["username"] = $username;
+                $_SESSION["email"]    = $email;
+                $_SESSION["role"]     = "student";
 
-                header("Location: login.php?message=Account registered successfully! You may now sign in.");
+                // Log audit
+                log_audit($conn, $new_user_id, $username, "USER_REGISTER", "New student registered and auto-logged in: $name ($email)", "SUCCESS");
+
+                // Redirect directly into student dashboard
+                header("Location: dashboard.php");
                 exit();
             } else {
                 $error = "Registration failed: " . htmlspecialchars($conn->error);
@@ -265,8 +284,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <label for="course">Course *</label>
                     <select id="course" name="course" required>
                         <option value="">-- Select Course --</option>
-                        <option value="Computer Science Engineering" selected>Computer Science Engineering</option>
                         <option value="Information Technology">Information Technology</option>
+                        <option value="Computer Science Engineering">Computer Science Engineering</option>
                         <option value="Data Science">Data Science</option>
                         <option value="Web Development">Web Development</option>
                     </select>

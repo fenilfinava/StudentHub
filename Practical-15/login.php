@@ -3,19 +3,9 @@ session_start();
 require_once "db.php";
 require_once "audit_logger.php";
 
-// If already logged in, redirect to respective dashboard
-if (isset($_SESSION["user_id"])) {
-    if (($_SESSION["role"] ?? "") === "admin") {
-        header("Location: admin_dashboard.php");
-        exit();
-    } else {
-        header("Location: student_dashboard.php");
-        exit();
-    }
-}
-
 $error   = $_GET["error"] ?? "";
 $message = $_GET["message"] ?? "";
+$already_logged_user = $_SESSION["username"] ?? null;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $login_input = trim($_POST["login_input"] ?? ($_POST["email"] ?? ($_POST["username"] ?? "")));
@@ -31,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($user = $result->fetch_assoc()) {
             if (password_verify($password, $user["password"])) {
+                // Wipe prior session & regenerate ID
+                session_unset();
                 session_regenerate_id(true);
                 $_SESSION["user_id"]  = $user["id"];
                 $_SESSION["username"] = $user["username"];
@@ -114,6 +106,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <p class="text-muted small">CSPIT Campus Portal | Academic Year 2026-27 (Practical 15)</p>
     </div>
 
+    <?php if ($already_logged_user): ?>
+        <div class="alert alert-info py-2 px-3 small d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <i class="bi bi-info-circle-fill me-1"></i> Active: <strong><?= htmlspecialchars($already_logged_user) ?></strong>
+            </div>
+            <div>
+                <a href="dashboard.php" class="text-decoration-none fw-bold me-2">Dashboard &rarr;</a>
+                <a href="logout.php" class="text-danger text-decoration-none fw-bold">Logout</a>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <?php if ($error): ?>
         <div class="alert alert-danger py-2 px-3 small d-flex align-items-center mb-3">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -131,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <form method="POST" action="login.php">
         <div class="mb-3">
             <label for="login_input" class="form-label small fw-semibold text-secondary">Username or Email Address</label>
-            <input type="text" class="form-control" id="login_input" name="login_input" placeholder="e.g. admin01 or student01@gmail.com" required autofocus>
+            <input type="text" class="form-control" id="login_input" name="login_input" placeholder="e.g. charusat123@gmail.com" required autofocus>
         </div>
 
         <div class="mb-3">

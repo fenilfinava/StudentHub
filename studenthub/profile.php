@@ -11,20 +11,20 @@ if (!isset($_SESSION["user_id"])) {
 $user_id  = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $email    = $_SESSION["email"] ?? "";
-$student_name  = "Fenil Finava";
+$student_name  = $username ?: "Student";
 $enrollment_no = "25CS011";
 $course        = "Computer Science & Engineering (CSE)";
 $sem           = "Semester 3 (Division I)";
 
-$st_stmt = $conn->prepare("SELECT enrollment_no, name, course, semester, gender FROM students WHERE email = ? LIMIT 1");
+$st_stmt = $conn->prepare("SELECT enrollment_no, name, course, semester, gender FROM students WHERE email = ? OR name = ? LIMIT 1");
 if ($st_stmt) {
-    $st_stmt->bind_param("s", $email);
+    $st_stmt->bind_param("ss", $email, $username);
     $st_stmt->execute();
     $res = $st_stmt->get_result();
     if ($row = $res->fetch_assoc()) {
-        $student_name  = $row["name"];
-        $enrollment_no = $row["enrollment_no"] ?: "25CS011";
-        $course        = $row["course"];
+        $student_name  = $row["name"] ?: $student_name;
+        $enrollment_no = $row["enrollment_no"] ?: $enrollment_no;
+        $course        = $row["course"] ?: $course;
         $sem           = "Semester " . ($row["semester"] ?: 3) . " (Division I)";
     }
     $st_stmt->close();
