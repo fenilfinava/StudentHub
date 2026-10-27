@@ -1,13 +1,37 @@
 # Word documents (Strictly local academic reports)
 *.docx
+~$*.docx
 
 # OS metadata
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Compiled classes & temp archives
+# Java & compiled binaries
 *.class
+*.java
+*.jar
+*.war
 *.zip
+*.tar.gz
 
-# Logs
+# Logs & scratch
 logs/
+*.log
+*.tmp
+*.swp
+*~
+
+# Uploaded test media (keep folders via .gitkeep)
+Practical-12/uploads/*
+!Practical-12/uploads/.gitkeep
+Practical-12/uploads/1791537429_6ac8b1155ae37.jpeg
+Practical-12/uploads/1792389534_6ad5b19e75e32.jpg
+Practical-15/uploads/*
+!Practical-15/uploads/.gitkeep
+studenthub/uploads/*
+!studenthub/uploads/.gitkeep
