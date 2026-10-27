@@ -98,7 +98,7 @@ CREATE TABLE `menu_items` (
 
 LOCK TABLES `menu_items` WRITE;
 /*!40000 ALTER TABLE `menu_items` DISABLE KEYS */;
-INSERT INTO `menu_items` VALUES (1,'Student Dashboard','student_dashboard.php','user','bi-speedometer2'),(2,'My Profile & Contact','profile.php','user','bi-person-badge'),(3,'Campus Events','events.php','user','bi-calendar-event'),(4,'Faculty Console','faculty.php','editor','bi-mortarboard'),(5,'Attendance System','attendance.php','editor','bi-check2-square'),(6,'Admin Management Console','admin_dashboard.php','admin','bi-shield-lock'),(7,'Student Management (CRUD)','students.php','admin','bi-people'),(8,'Campus Event Manager','events.php','admin','bi-calendar-plus'),(9,'Asynchronous SPA Manager','spa_manager.php','admin','bi-lightning-charge'),(10,'Security Audit Logs','audit_logs.php','admin','bi-journal-text');
+INSERT INTO `menu_items` VALUES (1,'Student Dashboard','student_dashboard.php','user','bi-speedometer2'),(2,'My Profile & Contact','student_dashboard.php','user','bi-person-badge'),(3,'Campus Events','student_dashboard.php#events','user','bi-calendar-event'),(4,'Faculty Console','faculty.php','editor','bi-mortarboard'),(5,'Attendance System','student_dashboard.php#attendance','editor','bi-check2-square'),(6,'Admin Management Console','admin_dashboard.php','admin','bi-shield-lock'),(7,'Student Management (CRUD)','admin_dashboard.php?tab=students','admin','bi-people'),(8,'Campus Event Manager','admin_dashboard.php?tab=events','admin','bi-calendar-plus'),(9,'Asynchronous SPA Manager','../Practical-13/index.html','admin','bi-lightning-charge'),(10,'Security Audit Logs','admin_dashboard.php?tab=audits','admin','bi-journal-text');
 /*!40000 ALTER TABLE `menu_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-27 17:03:15
+-- Dump completed on 2026-10-27 17:07:57
