@@ -1,0 +1,13 @@
+# Word documents (Strictly local academic reports)
+*.docx
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Compiled classes & temp archives
+*.class
+*.zip
+
+# Logs
+logs/
