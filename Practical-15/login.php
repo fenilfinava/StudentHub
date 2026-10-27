@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     header("Location: admin_dashboard.php?success=Welcome Administrator! Master console loaded successfully.");
                     exit();
                 } else {
-                    header("Location: student_dashboard.php");
+                    header("Location: dashboard.php");
                     exit();
                 }
             } else {
@@ -145,6 +145,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="text-center mt-3 small text-muted">
             New student? <a href="register.php" class="text-primary fw-semibold text-decoration-none">Create an account</a>
+        </div>
+        <div class="text-center mt-2 small">
+            <a href="index.php" class="text-secondary text-decoration-none">&larr; Back to Home</a>
         </div>
     </form>
 </div>
